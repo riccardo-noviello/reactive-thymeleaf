@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Reactive Thymeleaf</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Title</h1>
+
+    <div id="fragment-1">
+        <table th:each="stream: ${list}" class="table table-striped">
+            <tr th:each="item : ${stream}">
+
+                <td th:text="${item.quoteReference}"></td>
+                <td th:text="${item.customerName}"></td>
+                <td th:text="${item.status}"></td>
+
+            </tr>
+
+        </table>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">This is a panel, should render ragardless of the data in the table</div>
+    </div>
+</div>
+
+<script data-th-inline="javascript">
+
+        function DataSubscriber () {
+            this.source = null;
+            this.start = function () {
+                var htmlFragment = document.getElementById("fragment-1");
+                var sourceUrl = [[@{|/loadTable|}]];
+                this.source = new EventSource(sourceUrl);
+                this.source.addEventListener("message", function (event) {
+                    // This is just HTML, so no need to do anything else
+                    htmlFragment.innerHTML = event.data;
+                });
+                this.source.onerror = function () {
+                    this.close();
+                };
+            };
+            this.stop = function() {
+                this.source.close();
+            }
+        }
+
+
+        subscriber = new DataSubscriber();
+
+        window.onload = function() {
+            subscriber.start();
+        };
+
+        window.onbeforeunload = function() {
+            subscriber.stop();
+        }
+
+</script>
+</body>
+</html>
