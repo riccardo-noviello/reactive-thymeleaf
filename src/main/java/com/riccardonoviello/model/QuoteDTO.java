@@ -1,4 +1,4 @@
-package com.riccardonoviello;
+package com.riccardonoviello.model;
 
 public class QuoteDTO {
     private String quoteReference;

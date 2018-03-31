@@ -1,8 +1,9 @@
-package com.riccardonoviello;
+package com.riccardonoviello.controller;
 
+import com.riccardonoviello.model.QuoteDTO;
+import com.riccardonoviello.service.QuoteService;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(final Model model) {
-        return "index-datadriven";
+        return "index";
     }
 
     @RequestMapping(value = "/loadTable")
@@ -29,6 +30,6 @@ public class IndexController {
         model.addAttribute("list",
                 new ReactiveDataDriverContextVariable(quotesStream, 1));
 
-        return "index-datadriven :: #fragment-1";
+        return "index :: #fragment-1";
     }
 }

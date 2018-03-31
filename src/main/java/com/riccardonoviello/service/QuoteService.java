@@ -1,5 +1,6 @@
-package com.riccardonoviello;
+package com.riccardonoviello.service;
 
+import com.riccardonoviello.model.QuoteDTO;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -20,7 +21,7 @@ public class QuoteService {
                 getQuote("Q0002"),
                 getQuote("Q0003"),
                 getQuote("Q0004"),
-                getQuote("Q0005", "ACCEPTED"));
+                getQuote("Q0005"));
 
         List<QuoteDTO> list4 = Arrays.asList(getQuote("Q0001"),
                 getQuote("Q0002"),
